@@ -1,32 +1,36 @@
 
 #create a resource group
-New-AzResourceGroup -Name 'windowsRG' -Location 'EastUS'
+$resourceGroupName = "windowsRG"
+$location = "EastUS"
+New-AzResourceGroup -Name $resourceGroupName -Location $location
 
-# Create a secure password
+# User credentials
 $securePassword = ConvertTo-SecureString "Password123!" -AsPlainText -Force
-
-# Create the credential object
 $credential = New-Object System.Management.Automation.PSCredential ("adminuser", $securePassword)
 
+# VM naming
+$vmName = "Win19VM"
+$vnetName = "Win19VNET"
+$subnetName = "web"
+$nsgName = "Win19_NetworkSecurityGroup"
+$publicIpName = "Win19_PublicIpAddress"
+
+# Create a new VM
 New-AzVm `
-    -ResourceGroupName "windowsRG" `
-    -Name "Win19VM" `
-    -Location "EastUS" `
+    -ResourceGroupName $resourceGroupName `
+    -Name $vmName `
+    -Location $location `
     -Image "Win2019Datacenter" `
     -Size "Standard_D2s_v3" `
-    -VirtualNetworkName "Win19VNET" `
+    -VirtualNetworkName $vnetName `
     -AddressPrefix "10.0.0.0/16" `
-    -SubnetName "web" `
+    -SubnetName $subnetName `
     -SubnetAddressPrefix "10.0.0.0/24" `
-    -SecurityGroupName "Win19_NetworkSecurityGroup" `
-    -PublicIpAddressName "Win19_PublicIpAddress" `
+    -SecurityGroupName $nsgName `
+    -PublicIpAddressName $publicIpName `
     -OpenPorts 80, 3389, 22 `
     -Credential $credential `
     -Zone 1
 
-Write-Host "Open the Windows Remote Desktop app and add the following public IP address to connect to your VM."
-Get-AzPublicIpAddress -ResourceGroupName "windowsRG"  | Select-Object IpAddress
-
-
-
-
+Write-Host "Open Windows Remote Desktop app and add the following public IP address to connect to your VM:"
+Get-AzPublicIpAddress -ResourceGroupName $resourceGroupName | Select-Object IpAddress

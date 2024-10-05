@@ -8,10 +8,12 @@ $nsgName = 'linuxVMNSG'
 
 # Create a new resource group
 Write-Output "Creating resource group '$resourceGroupName' in $location..."
-
 New-AzResourceGroup -Name $resourceGroupName -Location $location
 
-Write-Output "Resource group '$resourceGroupName' created."
+#--------------------------------------------
+# VIRTUAL MACHINE
+#--------------------------------------------
+
 
 # Create a Linux VM using Azure CLI
 Write-Output "Creating Linux VM in the '$resourceGroupName' resource group..."
@@ -30,7 +32,9 @@ try {
     Write-Error "Failed to create VM. Error: $_"
 }
 
-# Set inbound port rules for SSH on NSG
+#--------------------------------------------
+# NETWORKING
+#--------------------------------------------
 
 Write-Host "Adding inbound port rule for SSH on NSG..."
 
@@ -57,6 +61,10 @@ try {
 } catch {
     Write-Error "Failed to add inbound port rule for SSH. Error: $_"
 }
+
+#--------------------------------------------
+# APPLICATION INSTALLATION
+#--------------------------------------------
 
 
 # Install Apache2 on the newly created VM

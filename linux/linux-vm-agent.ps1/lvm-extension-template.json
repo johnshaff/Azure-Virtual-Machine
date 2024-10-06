@@ -1,0 +1,88 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the VM to which the extension will be added."
+            }
+        },
+        "workspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the Log Analytics workspace."
+            }
+        },
+        "workspaceResourceId": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource ID of the Log Analytics workspace."
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "apiVersion": "2020-06-01",
+            "name": "[concat(parameters('vmName'), '/AzureMonitorLinuxAgent')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publisher": "Microsoft.Azure.Monitor",
+                "type": "AzureMonitorLinuxAgent",
+                "typeHandlerVersion": "1.9",
+                "autoUpgradeMinorVersion": true,
+                "enableAutomaticUpgrade": true,
+                "settings": {}
+            }
+        },
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "apiVersion": "2021-04-01",
+            "name": "myDCR",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "dataSources": {
+                    "performanceCounters": [
+                        {
+                            "name": "perfCounters",
+                            "streams": [
+                                "Microsoft-Perf"
+                            ],
+                            "samplingFrequencyInSeconds": 15,
+                            "counterSpecifiers": [
+                                "Processor(_Total)\\% Processor Time"
+                            ]
+                        }
+                    ]
+                },
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "name": "[parameters('workspaceName')]",
+                            "workspaceResourceId": "[parameters('workspaceResourceId')]"
+                        }
+                    ]
+                },
+                "dataFlows": [
+                    {
+                        "streams": [
+                            "Microsoft-Perf"
+                        ],
+                        "destinations": [
+                            "[parameters('workspaceName')]"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines/providers/dataCollectionRuleAssociations",
+            "apiVersion": "2022-06-01",
+            "name": "[concat(parameters('vmName'), '/Microsoft.Insights/myDCRAssociation')]",
+            "properties": {
+                "dataCollectionRuleId": "[resourceId('Microsoft.Insights/dataCollectionRules', 'myDCR')]"
+            }
+        }
+    ]
+}

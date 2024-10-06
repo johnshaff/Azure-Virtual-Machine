@@ -24,3 +24,13 @@ This script helps you retrieve and display the latest Linux virtual machine imag
 ### `linux-apache-vm.ps1`
 
 This script automates the deployment of a Debian 11 Linux Virtual Machine (VM) on Azure. It creates the VM, configures networking to allow HTTP traffic on port 80, and installs the Apache2 web server on the VM.
+
+## Linux VM Agent (LVM) Scripts
+
+### `lvm-list-extensions.ps1`
+
+This script lists all available Azure Linux Extensions and first gives you the latest version of each, and then list all other versions.
+
+### `lvm-list-extensions.ps1`
+
+This script lists all available Azure Linux Extensions and first gives you the latest version of each, and then list all other versions.

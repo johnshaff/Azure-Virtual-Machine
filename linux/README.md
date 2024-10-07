@@ -46,6 +46,10 @@ Azure provides a wide range of Linux distributions, including but not limited to
   
 - **AppArmor**: Another security feature that is available on Ubuntu and other distributions, AppArmor allows you to restrict programs' capabilities, ensuring tighter control over services.
 
+### Additional Resources
+
+- **Azure Documentation**: Explore detailed guides and tutorials at the [Finding Azure Marketplace images](https://learn.microsoft.com/en-us/azure/virtual-machines/linux/cli-ps-findimage).
+
 ## Prerequisites for Executing Scripts in the Linux Directory
 
 Before running the scripts, ensure you have:
@@ -57,7 +61,7 @@ Before running the scripts, ensure you have:
 - Logged into your Azure CLI using `az login`.
 - A resource group and storage account (or use the script to create one).
 
-## Start Here:
+## Start Here
 
 ### `linux-list-images.ps1`
 

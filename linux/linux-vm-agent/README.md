@@ -30,6 +30,10 @@ The Azure Linux VM Agent supports various Linux distributions, including:
 - SUSE Linux Enterprise Server (SLES)
 - Debian
 
+### Additional Resources
+
+- **Azure Documentation**: Explore detailed guides and tutorials at the [Linux VM Agent documentation](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/agent-linux).
+
 ### Prerequisites for Using Azure Linux VM Agent Scripts & Templates
 
 Before configuring the Linux VM agent, ensure the following:

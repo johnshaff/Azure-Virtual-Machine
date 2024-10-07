@@ -46,8 +46,16 @@ Before configuring the Linux VM agent, ensure the following:
 
 ### `lvm-install-extension-template.ps1`
 
-This script deploys the **AzureMonitorLinuxAgent** extension on an existing Linux VM for performance monitoring. The agent requires a Log Analytics workspace to store and analyze collected metrics like CPU performance. To ensure all dependencies are handled, the script first creates a Log Analytics workspace and retrieves its Resource ID. The workspace details, along with the VM name, are passed to an ARM template, which deploys the **AzureMonitorLinuxAgent** extension and sets up data collection rules. These rules ensure that performance data is sent to the Log Analytics workspace for monitoring and analysis.
+This script deploys the **AzureMonitorLinuxAgent** extension on an existing Linux VM for performance monitoring. The agent requires a Log Analytics workspace to store and analyze collected metrics like CPU performance. To ensure all dependencies are handled, the script first creates a Log Analytics workspace and retrieves its Resource ID. The workspace details, along with the VM name, are passed to an ARM template `lvm-extension-template.json`, which deploys the **AzureMonitorLinuxAgent** extension and sets up data collection rules. These rules ensure that performance data is sent to the Log Analytics workspace for monitoring and analysis.
 
 ### `lvm-install-extension.ps1`
 
 This script uses the Azure CLI to install the **AzureMonitorLinuxAgent** extension on an existing Linux VM. It leverages the Azure CLI `az vm extension set` command to add the agent to the specified VM for performance monitoring. This script only installs the agent and does not configure or set up the Log Analytics workspace for data collection.
+
+### `lvm-list-extensions.ps1`
+
+This script retrieves and displays the latest version of each Azure VM extension provided by a specific publisher, in this case, Microsoft.Azure.Extensions. It first fetches all extension images from the specified publisher and converts the output to PowerShell objects. The extensions are grouped by publisher and name, and the script then selects the latest version for each group. The results are displayed in a formatted table with custom column names. Additionally, the script lists all versions of each extension from the publisher and includes instructions for modifying the publisher name if needed.
+
+### `lvm-list-extension-publishers.ps1`
+
+This script lists all extension publishers. You can use this script to find publisher names to be used in in the `lvm-list-extensions.ps1` script to list all the extension for that publisher.

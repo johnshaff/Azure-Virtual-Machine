@@ -6,13 +6,12 @@ MOST COMMON LINUX PUBLISHER NAMES
 3. RedHat
 4. SUSE
 5. Debian
-6. ArchLinux
 
 You can copy and paste these publisher names below
 #>
 
 # Define the publisher name
-$publisher = "debian"
+$publisher = "canonical"
 
 # Fetch all images for the publisher 'debian' in 'eastus' location
 $images = az vm image list --location eastus --publisher $publisher --all --output json | ConvertFrom-Json

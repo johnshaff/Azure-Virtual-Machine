@@ -8,7 +8,7 @@ Azure Linux VM Agents (waagent) are used to manage Azure Linux Virtual Machines 
 
 - **Provisioning**: The agent handles initial VM setup, including hostname configuration, user creation, and enabling SSH access based on the provided Azure parameters.
 
-- **VM Extensions**: The agent manages extensions, allowing you to run custom scripts, deploy configurations, or perform monitoring tasks on the VM after provisioning.
+- **VM Extensions**: The waagent agent manages extensions including extensions which are other agents, allowing you to run custom scripts, deploy configurations, or perform monitoring tasks on the VM after provisioning. When installing an extension on a vm, whether you're using the Azure CLI `az vm extension set` command, or you're installing the extension via a template using the Azure CLI `az deployment group create` command, it is ultimately the waagent agent (ie Azure Linux Agent) that is doing the installation, configuration, and updating of that extension.
 
 ### VM Agent Features
 
@@ -30,7 +30,7 @@ The Azure Linux VM Agent supports various Linux distributions, including:
 - SUSE Linux Enterprise Server (SLES)
 - Debian
 
-### Prerequisites for Using Azure Linux VM Agents
+### Prerequisites for Using Azure Linux VM Agent Scripts & Templates
 
 Before configuring the Linux VM agent, ensure the following:
 
@@ -41,3 +41,13 @@ Before configuring the Linux VM agent, ensure the following:
 - Logged into your Azure account using `Connect-AzAccount`.
 - Logged into your Azure CLI using `az login`.
 - A resource group and storage account (or use the script to create one).
+
+## Linux VM Agent Scripts
+
+### `lvm-install-extension-template.ps1`
+
+This script deploys the **AzureMonitorLinuxAgent** extension on an existing Linux VM for performance monitoring. The agent requires a Log Analytics workspace to store and analyze collected metrics like CPU performance. To ensure all dependencies are handled, the script first creates a Log Analytics workspace and retrieves its Resource ID. The workspace details, along with the VM name, are passed to an ARM template, which deploys the **AzureMonitorLinuxAgent** extension and sets up data collection rules. These rules ensure that performance data is sent to the Log Analytics workspace for monitoring and analysis.
+
+### `lvm-install-extension.ps1`
+
+This script uses the Azure CLI to install the **AzureMonitorLinuxAgent** extension on an existing Linux VM. It leverages the Azure CLI `az vm extension set` command to add the agent to the specified VM for performance monitoring. This script only installs the agent and does not configure or set up the Log Analytics workspace for data collection.

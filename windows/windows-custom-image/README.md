@@ -32,7 +32,7 @@ Azure Custom Windows Images offer the ability to create virtual machine (VM) ima
 
 Understanding these foundational concepts is essential when working with custom Windows images in Azure. This knowledge will help you effectively utilize Azure's infrastructure to automate and scale your VM deployments.
 
-## Windows Custom Image Scripts Summary
+## Scripts Summary
 
 This project automates the creation of a custom Windows image and the deployment of a new virtual machine (VM) based on that image in Azure. By using Azure Image Builder, custom configurations are baked into the image, allowing for scalable, consistent VM deployments. This process leverages PowerShell scripts and an ARM template to streamline the image creation and provisioning workflow. The VM is then provisioned with a predefined size, location, and integration with Azure Compute Gallery for easy replication and scalability.
 
@@ -58,7 +58,7 @@ The base image template (`baseImageTemplate.json`) includes the following config
 
 Once the image is built, it is distributed through an Azure Compute Gallery, which allows for easy deployment across multiple regions, ensuring scalability and rapid VM provisioning globally.
 
-## Prerequisites for Executing Scripts in the Linux Directory
+## Prerequisites for Executing Scripts in this Directory
 
 Before running the scripts, ensure you have:
 

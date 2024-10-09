@@ -78,7 +78,7 @@ Before using cloud-init with Azure Linux VMs, ensure that:
 - Logged into your Azure CLI using `az login`.
 - A resource group and storage account (or use the script to create one).
 
-## Linux VM Agent Scripts
+## Azure Cloud-Init Scripts
 
 ### `cloud-init-apache-vm.ps1`
 

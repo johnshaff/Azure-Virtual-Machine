@@ -1,0 +1,103 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "imageTemplateName": {
+            "type": "string"
+        },
+        "api-version": {
+            "type": "string"
+        },
+        "svclocation": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('imageTemplateName')]",
+            "type": "Microsoft.VirtualMachineImages/imageTemplates",
+            "apiVersion": "[parameters('api-version')]",
+            "location": "[parameters('svclocation')]",
+            "dependsOn": [],
+            "tags": {
+                "imagebuilderTemplate": "AzureImageBuilderSIG",
+                "userIdentity": "enabled"
+            },
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                   "<imgBuilderId>": {}
+                }
+            },
+            "properties": {
+                "buildTimeoutInMinutes": 120,
+                "vmProfile": {
+                    "vmSize": "Standard_D2s_v3",
+                    "osDiskSizeGB": 127
+                },
+                "source": {
+                    "type": "PlatformImage",
+                    "publisher": "Debian",
+                    "offer": "debian-12",
+                    "sku": "12-gen2",
+                    "version": "latest"
+                },
+                "customize": [
+                    {
+                        "type": "Shell",
+                        "name": "InstallCommonPackages",
+                        "inline": [
+                            "apt-get update || { echo 'Failed to execute: apt-get update'; exit 1; }",
+                            "apt-get install -y apache2 || { echo 'Failed to execute: apt-get install -y apache2'; exit 1; }"
+                        ]
+                    },
+                    {
+                        "type": "Shell",
+                        "name": "ConfigureSSH",
+                        "inline": [
+                            "apt-get install -y openssh-server || { echo 'Failed to execute: apt-get install -y openssh-server'; exit 1; }",
+                            "systemctl enable ssh || { echo 'Failed to execute: systemctl enable ssh'; exit 1; }",
+                            "systemctl start ssh || { echo 'Failed to execute: systemctl start ssh'; exit 1; }",
+                            "sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config || { echo 'Failed to execute: sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config'; exit 1; }",
+                            "systemctl restart ssh || { echo 'Failed to execute: systemctl restart ssh'; exit 1; }"
+                        ]
+                    },
+                    {
+                        "type": "Shell",
+                        "name": "ApplyUpdates",
+                        "inline": [
+                            "apt-get update || { echo 'Failed to execute: apt-get update'; exit 1; }",
+                            "apt-get upgrade -y || { echo 'Failed to execute: apt-get upgrade -y'; exit 1; }"
+                        ]
+                    },
+                    {
+                        "type": "Shell",
+                        "name": "CleanUp",
+                        "inline": [
+                            "apt-get autoremove -y || { echo 'Failed to execute: apt-get autoremove -y'; exit 1; }",
+                            "apt-get clean || { echo 'Failed to execute: apt-get clean'; exit 1; }"
+                        ]
+                    }
+                ],
+                "distribute": [
+                    {
+                        "type": "SharedImage",
+                        "galleryImageId": "/subscriptions/<subscriptionID>/resourceGroups/<rgName>/providers/Microsoft.Compute/galleries/<sharedImageGalName>/images/<imageDefName>",
+                        "runOutputName": "<runOutputName>",
+                        "artifactTags": {
+                            "publisher": "Debian",
+                            "offer": "debian-12",
+                            "sku": "12-gen2",
+                            "osType": "Linux",
+                            "imageType": "Custom"
+                        },
+                        "replicationRegions": [
+                            "<region1>"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}

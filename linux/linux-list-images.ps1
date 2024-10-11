@@ -11,7 +11,10 @@ You can copy and paste these publisher names below
 #>
 
 # Define the publisher name
-$publisher = "canonical"
+$publisher = "debian"
+
+Write-Host "`nSearching, sorting and filtering $publisher images by their offer, sku and versions. `
+This script may take several minutes to complete depending on the publisher and location you defined. `n" -ForegroundColor DarkGreen
 
 # Fetch all images for the publisher 'debian' in 'eastus' location
 $images = az vm image list --location eastus --publisher $publisher --all --output json | ConvertFrom-Json

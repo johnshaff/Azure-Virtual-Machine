@@ -7,7 +7,7 @@ $ErrorActionPreference = "Stop"
 
 $context = Get-AzContext
 $subscriptionID = $context.Subscription.Id
-$resourceGroupName = "demoRG"
+$resourceGroupName = "linuxRG"
 $location = "eastus"
 
 # Create resource group
@@ -30,6 +30,7 @@ New-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name $identity
 
 $identityNameResourceId = $(Get-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name $identityName).Id
 $identityNamePrincipalId = $(Get-AzUserAssignedIdentity -ResourceGroupName $resourceGroupName -Name $identityName).PrincipalId
+write-host "Identity Principle ID: $identityNamePrincipalId"
 
 $aibRoleImageCreationPath = "aibRoleImageCreation.json"
 
@@ -64,8 +65,8 @@ catch {
 # CREATE AZURE COMPUTE GALLERY AND IMAGE
 #---------------------------------------------
 
-$sigGalleryName = "windowsGallery" # Replace with your own gallery name
-$imageDefName = "win10avd" # Replace with your own image definition name
+$sigGalleryName = "linuxGallery" # Replace with your own gallery name
+$imageDefName = "debian12" # Replace with your own image definition name
 $publisherName = "SHAFF" # Replace with your own publisher name
 
 try {
@@ -85,7 +86,7 @@ catch {
 # PREPARE CUSTOM IMAGE TEMPLATE
 #---------------------------------------------
 
-# Download base template file
+# Define base template file
 $templateFilePath = "baseImageTemplate.json"
 
 # Distribution properties object name (runOutput). Gives you the properties of the managed image on completion
@@ -108,7 +109,7 @@ $runOutputName = "sigOutput"
 #---------------------------------------------
 
 # Image template name
-$imageTemplateName = "win10avdTemplate"
+$imageTemplateName = "debian12Template"
 
 try {
     # Validate the template first
@@ -185,7 +186,7 @@ while (-not $buildComplete) {
     }
     else {
         # Wait for 60 seconds before checking again
-        Start-Sleep -Seconds 30
+        Start-Sleep -Seconds 60
     }
 }
 

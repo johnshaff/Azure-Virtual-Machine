@@ -42,7 +42,7 @@ This project automates the creation of a custom Windows image and the deployment
 
 2. **Image Creation**: The second script (`2-create-custom-image.ps1`) builds the custom Windows image by leveraging Azure Image Builder and the ARM template (`baseImageTemplate.json`), which specifies the source OS, VM size, and necessary customizations.
 
-3. **VM Provisioning**: The final script (`3-provision-image-vm.ps1`) deploys a new VM using the custom image created earlier, ensuring a consistent, pre-configured environment ready for use.
+3. **VM Provisioning**: The final script (`3-provision-image-vm.ps1`) deploys a new VM using the custom image created earlier, and opens the necessary ports before returning your public IP address for use with Windows Remote Desktop (RDP).
 
 ### Template Details
 
@@ -69,6 +69,7 @@ Before running the scripts, ensure you have:
 - Logged into your Azure account using `Connect-AzAccount`.
 - Logged into your Azure CLI using `az login`.
 - A resource group and storage account (or use the script to create one).
+- Ensure you're executing your scripts within the same directory as the .json files
 
 ### Additional Resources
 

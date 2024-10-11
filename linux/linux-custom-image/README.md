@@ -69,6 +69,7 @@ Before running the scripts, ensure you have:
 - Logged into your Azure account using `Connect-AzAccount`.
 - Logged into your Azure CLI using `az login`.
 - A resource group and storage account (or use the script to create one).
+- Ensure you're executing your scripts within the same directory as the .json files
 
 ### Additional Resources
 

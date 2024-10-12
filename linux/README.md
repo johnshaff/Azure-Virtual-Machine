@@ -78,7 +78,3 @@ This script automates the deployment of a Debian 11 Linux Virtual Machine (VM) o
 ### `lvm-list-extensions.ps1`
 
 This script lists all available Azure Linux Extensions and first gives you the latest version of each, and then list all other versions.
-
-### `lvm-list-extensions.ps1`
-
-This script lists all available Azure Linux Extensions and first gives you the latest version of each, and then list all other versions.

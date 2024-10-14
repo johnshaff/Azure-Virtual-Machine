@@ -1,14 +1,14 @@
 
 
 # Declare global variables
-$resourceGroupName = "linuxRG"
+$resourceGroup = "testRG"
 $location = "EastUS"
 $vmName = "linuxVM"
 $nsgName = 'linuxVMNSG'
 
 # Create a new resource group
-Write-Output "Creating resource group '$resourceGroupName' in $location..."
-New-AzResourceGroup -Name $resourceGroupName -Location $location
+Write-Output "Creating resource group '$resourceGroup' in $location..."
+New-AzResourceGroup -Name $resourceGroup -Location $location
 
 #--------------------------------------------
 # VIRTUAL MACHINE
@@ -16,10 +16,10 @@ New-AzResourceGroup -Name $resourceGroupName -Location $location
 
 
 # Create a Linux VM using Azure CLI
-Write-Output "Creating Linux VM in the '$resourceGroupName' resource group..."
+Write-Output "Creating Linux VM in the '$resourceGroup' resource group..."
 
 try {
-    az vm create --resource-group $resourceGroupName `
+    az vm create --resource-group $resourceGroup `
                  --name $vmName `
                  --image "Debian11" `
                  --public-ip-sku "Standard" `
@@ -45,7 +45,7 @@ $description = 'Allow inbound HTTP traffic'
 try {
 
     Add-AzNetworkSecurityRuleConfig `
-        -NetworkSecurityGroup (Get-AzNetworkSecurityGroup -ResourceGroupName $resourceGroupName -Name $nsgName) `
+        -NetworkSecurityGroup (Get-AzNetworkSecurityGroup -ResourceGroupName $resourceGroup -Name $nsgName) `
         -Name $ruleName `
         -Description $description `
         -Access Allow `
@@ -67,12 +67,12 @@ try {
 #--------------------------------------------
 
 
-# Install Apache2 on the newly created VM
+Install Apache2 on the newly created VM
 Write-Output "Installing Apache2 on '$vmName'..."
 
 try {
     az vm run-command invoke --command-id RunShellScript --name $vmName `
-                             --resource-group $resourceGroupName `
+                             --resource-group $resourceGroup `
                              --scripts "sudo apt update && sudo apt install -y apache2" | Out-String
     Write-Output "Apache2 installed successfully on '$vmName'."
 } catch {

@@ -8,7 +8,7 @@ $ErrorActionPreference = "Stop"
 
 # Define storage account details
 $resourceGroup = "az-900"
-$storageAccountName = "storageaccount77380"
+$storageAccountName = "<your-storage-account-name>"
 
 # Allow public access
 az storage account update `

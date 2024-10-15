@@ -2,6 +2,11 @@
 
 Azure Virtual Machines (VMs) are scalable, on-demand computing resources offered by Microsoft Azure. They provide the flexibility of virtualization without the need to buy and maintain the physical hardware required to run it. Azure VMs can be used for a variety of purposes, such as development and testing, running applications, or extending your data center to the cloud.
 
+### Using this Repository
+
+This repository provides end to end scripts for automating small to large Virtual Machine tasks such as building custom images, deploying fully networked and configured servers, configuring and installing VM agents, and deploying VM applications.
+
+---
 ### Key Concepts
 
 - **Virtual Machine (VM)**: An emulation of a computer system that provides the functionality of a physical computer. VMs run on a host machine and share the physical resources.

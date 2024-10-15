@@ -78,42 +78,6 @@ Azure Virtual Machines (VMs) are scalable, on-demand computing resources offered
 
 - **Firewall**: Implement NSGs and Azure Firewall to control inbound and outbound traffic.
 
-### Getting Started
-
-1. **Create a VM**:
-
-   - Use the Azure Portal, Azure CLI, Azure PowerShell, or ARM templates to create a new VM.
-   - Select the appropriate image, size, and configurations.
-
-2. **Configure Networking**:
-
-   - Set up your virtual network, subnets, and assign public or private IP addresses.
-   - Configure NSGs to control traffic.
-
-3. **Connect to the VM**:
-
-   - **Windows VM**: Connect using Remote Desktop Protocol (RDP).
-   - **Linux VM**: Connect using Secure Shell (SSH).
-
-4. **Install Applications**:
-
-   - Install and configure the necessary software and applications on your VM.
-
-5. **Monitor and Manage**:
-
-   - Use Azure Monitor and other tools to keep track of VM performance and health.
-   - Set up alerts and automate management tasks.
-
-### Cost Management
-
-- **Pay-as-you-go**: Only pay for what you use, with billing per second of compute time.
-
-- **Reserved Instances**: Save up to 72% by committing to one or three years of VM usage.
-
-- **Spot Instances**: Run workloads at a significant discount, suitable for interruptible tasks.
-
-- **Auto-Shutdown**: Schedule VMs to shut down during off-hours to save costs.
-
 ### Additional Resources
 
 - **Azure Documentation**: Explore detailed guides and tutorials at the [Azure Virtual Machines documentation](https://docs.microsoft.com/azure/virtual-machines/).
